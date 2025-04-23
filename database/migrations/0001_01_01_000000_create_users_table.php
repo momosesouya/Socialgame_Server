@@ -6,44 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
+            $table->unsignedBigInteger('manage_id')->autoIncrement()->comment('ユーザー管理ID');
+            $table->ulid('user_id')->charset('utf8')->comment('ユーザーID');
+            $table->string('user_name',16)->charset('utf8')->comment('表示名');
+            $table->unsignedTinyInteger('max_stamina')->default(100)->comment('最大スタミナ');
+            $table->unsignedTinyInteger('last_stamina')->useCurrent()->comment('最終更新時スタミナ');
+            $table->dateTime('stamina_updated')->useCurrent()->comment('スタミナ更新日時');
+            $table->dateTime('last_login')->useCurrent()->comment('最終ログイン日時');
+            $table->dateTime('created')->useCurrent()->comment('作成日時');
+            $table->dateTime('modified')->useCurrent()->useCurrentOnUpdate()->comment('更新日時');
+            $table->boolean('deleted')->default(0)->comment('削除');
+            $table->unique(['user_id']);
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
     }
 };
