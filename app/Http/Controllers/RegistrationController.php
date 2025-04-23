@@ -51,13 +51,14 @@ class RegistrationController extends Controller
                 'max_stamina' => config('constants.MAX_STAMINA'),
                 'last_stamina' => config('constants.LAST_STAMINA'),
             ]);
-            $manage_id = $userData->manage_id;
+            $manage_id = $user_Data->manage_id;
         });
 
         return response()->json([
             'status' => 'success',
             'user_id' => $user_id,
-            'user_name' => $user_name
+            'un' => $user_Data->user_name,
+            'manage_id' => $manage_id,
         ], 200);
     }
 }

@@ -44,7 +44,7 @@ class LoginController extends Controller
         // ログイン成功時のレスポンス
         return response()->json([
             'uid' => $user_Data->user_id,
-            'user_name' => $user_Data->user_name,
+            'un' => $user_Data->user_name,
             'result' => $result,
         ]);
     }
