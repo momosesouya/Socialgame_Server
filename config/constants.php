@@ -1,19 +1,67 @@
 <?php
 
 return [
-    'LOGIN_DAYS' => 0,
+    // ユーザーデータ
     'MAX_STAMINA' => 200,
     'LAST_STAMINA' => 200,
+    // ウォレットテーブル
+    'FREE_AMOUNT' => 0,
+    'PAID_AMOUNT' => 0,
+    'MAX_AMOUNT' => 99999,
+
+    // マスターバージョン
+    'MASTER_DATA_VERSION' => '1',
+
+    // スタミナ関連
+    'STAMINA_RECOVERY_SECOND' => 60,  // スタミナ回復にかかる時間
+    'STAMINA_RECOVERY_VALUE' => 1,     // 1回のスタミナ回復量
 
     /*レスポンス*/
+    /* 400番台...リダイレクト*/
     /* 500番台...サーバーエラー
     */
 
+    /* リダイレクト */
+    'ERRCODE_LOGIN_SESSION' => 400,
+
     /*サーバーエラー*/
     'ERRCODE_VALIDATION' => 500,
+    'ERRCODE_MASTER_VERSION' => 501,
+
+    // エラーコード
+    'ERRCODE_LOGIN_USER_NOT_FOUND' => 502, // ログインユーザーが見つからなかった
+    'ERRCODE_NOT_LOGGED_IN' => 503,        // ログインできなかった
+    'ERRCODE_LOST_CONNECT' => 504,         // 通信が切断された
+
+    'ERRCODE_CANT_REGISTRATION' => 505, // 登録ができなかった
+    'ERRCODE_CANT_LOGIN' => 506,        // ログインできなかった
+    'ERRCODE_CANT_UPDATE_HOME' => 507,  // ホーム情報の更新に失敗した
+    'ERRCODE_CANT_STAMINA_RECOVERY' => 508,          // スタミナ回復ができなかった
+    'ERRCODE_CANT_STAMINA_CONSUMPTION' => 509,       // スタミナ消費ができなかった
+    'ERRCODE_CANT_RECOVERY_ANY_MORE_STAMINA' => 510, // これ以上スタミナが回復できない
+    'ERRCODE_CANT_BUY_CURRENCY' => 511,        // 通貨の購入に失敗した
+    
+    'ERRCODE_NOT_ENOUGH_CURRENCY' => 518, // 通貨が足りない
+
 
     /*エラーメッセージ*/
+    
+    // Auth関連
+    'LOGIN_USER_NOT_FOUND' => 'ログインしているユーザーは見つかりませんでした',
+    'USER_IS_NOT_LOGGED_IN' => 'ユーザーはログインしていません',
+    'LOST_CONNECT' => '接続が切れました',   
+    
+    // ホーム
+    'CANT_UPDATE_HOME' => 'ホーム情報を更新できませんでした',
+    
+    // 登録
     'USERNAME_REQUIRED' => 'ユーザー名は必須です',
     'USERNAME_MAX' => 'ユーザー名は12文字以内で入力してください',
     'USERNAME_REGEX' => 'ユーザー名はひらがな、カタカナ、ローマ字のみ使用できます',
+    'CANT_REGISTRATION' => '登録に失敗しました。',
+
+    // ログイン
+    'CANT_LOGIN' => 'ログインができませんでした',
+
+    // ショップ
 ];
