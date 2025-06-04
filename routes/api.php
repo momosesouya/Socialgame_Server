@@ -21,3 +21,9 @@ Route::post('/buyCurrency', App\Http\Controllers\BuyCurrencyController::class);
 
 // スタミナ回復
 Route::post('/staminaRecovery', App\Http\Controllers\StaminaRecoveryController::class);
+
+// // マスタデータチェック
+Route::post('/masterCheck', App\Http\Controllers\MasterDataCheckController::class);
+
+// マスタデータ取得
+Route::post('/masterGet', App\Http\Controllers\MasterDataController::class);

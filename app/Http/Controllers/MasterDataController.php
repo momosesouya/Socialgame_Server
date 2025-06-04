@@ -7,9 +7,6 @@ use App\Models\PaymentShop;
 
 class MasterDataController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
     public function __invoke()
     {
         // クライアント側に送信したいマスタデータだけ選択

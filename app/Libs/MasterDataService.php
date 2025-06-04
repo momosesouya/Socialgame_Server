@@ -16,7 +16,7 @@ class MasterDataService
         // master_dataを追加
         $master_data_list = [];
         $master_data_list['payment_shop'] = PaymentShop::all();
-        //ここに追加したいマスタデータを追記していく
+        // ↑ここに追加したいマスタデータを追記していく
 
         // JSONファイルを作成
         $json = json_encode($master_data_list);

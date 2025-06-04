@@ -49,7 +49,7 @@ return [
     // Auth関連
     'LOGIN_USER_NOT_FOUND' => 'ログインしているユーザーは見つかりませんでした',
     'USER_IS_NOT_LOGGED_IN' => 'ユーザーはログインしていません',
-    'LOST_CONNECT' => '接続が切れました',   
+    'LOST_CONNECT' => '接続が切れました',
     
     // ホーム
     'CANT_UPDATE_HOME' => 'ホーム情報を更新できませんでした',
