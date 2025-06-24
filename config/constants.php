@@ -23,13 +23,15 @@ return [
 
     /* リダイレクト */
     'ERRCODE_LOGIN_SESSION' => 400,
+    'ERRCODE_LOGIN_USER_NOT_FOUND' => 401, // ユーザー認証エラー
+    'ERRCODE_LOGIN_SESSION' => 403, // ユーザー認証エラー
+    'ERRCODE_USER_NOT_FOUND' => 404, // ユーザー認証エラー
 
     /*サーバーエラー*/
     'ERRCODE_VALIDATION' => 500,
     'ERRCODE_MASTER_VERSION' => 501,
 
     // エラーコード
-    'ERRCODE_LOGIN_USER_NOT_FOUND' => 502, // ログインユーザーが見つからなかった
     'ERRCODE_NOT_LOGGED_IN' => 503,        // ログインできなかった
     'ERRCODE_LOST_CONNECT' => 504,         // 通信が切断された
 

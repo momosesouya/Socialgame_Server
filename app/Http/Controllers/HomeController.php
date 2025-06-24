@@ -17,32 +17,34 @@ class HomeController extends Controller
         $result = 0;
         $errcode = '';
 
-        // ログイン確認(ログインしてなかったらリダイレクト)
-        if (!Auth::hasUser()) {
-            $response = [
-                'errcode' => config('constants.ERRCODE_LOGIN_USER_NOT_FOUND'),
-            ];
-            return json_encode($response);
-        }
+        // $authUserData = Auth::user();
+        // if (!$authUserData) {
+        //     return response()->json([
+        //         'errcode' => config('constants.ERRCODE_LOGIN_USER_NOT_FOUND'),
+        //     ], 401);
+        // }
 
-        // ログイン確認済みのユーザー
-        $authUserData = Auth::user();
         // ユーザー情報取得
-        $user_Data = User::where('user_id', $request->uid)->first();
-        $manage_id = $user_Data->manage_id;
+        $userData = User::where('user_id', $request->uid)->first();
+        // if (!$userData) {
+        //     return response()->json([
+        //         'errcode' => 'ERRCODE_USER_NOT_FOUND',
+        //     ], 404);
+        // }
 
-        // ログインしているアカウントが自分と違ったらリダイレクト
-        if ($manage_id != $authUserData->manage_id) {
-            $response = [
-                'errcode' => config('constants.ERRCODE_LOGIN_SESSION'),
-            ];
-            return json_encode($response);
-        }
+        $manage_id = $userData->manage_id;
 
-        DB::transaction(function() use(&$result, $user_Data, $manage_id) {
-            $last_stamina = $user_Data->last_stamina;
-            $max_stamina = $user_Data->max_stamina;
-            $updated = $user_Data->stamina_updated;
+        // ログインユーザーと照合
+        // if ($manage_id != $authUserData->manage_id) {
+        //     return response()->json([
+        //         'errcode' => config('constants.ERRCODE_LOGIN_SESSION'),
+        //     ], 403);
+        // }
+
+        DB::transaction(function() use(&$result, $userData, $manage_id) {
+            $last_stamina = $userData->last_stamina;
+            $max_stamina = $userData->max_stamina;
+            $updated = $userData->stamina_updated;
 
             // スタミナ回復
             if ($last_stamina < $max_stamina) {
@@ -64,21 +66,33 @@ class HomeController extends Controller
             $result = 1;
         });
 
-        switch($result) {
-            case 0:
-                $errcode = config('constants.CANT_UPDATE_HOME');
-                $response = [
-                    'errcode' => $errcode,
-                ];
-                break;
-            case 1:
-                $response = [
-                    'users' => User::where('manage_id',$manage_id)->first(),
-                    //'wallets' => UserWallet::where('manage_id', $manage_id)->first(),
-                    // TODO: 他にホームに戻った時に取得したい情報があればここに追記
-                ];
-                break;
+
+        if ($result === 0) {
+            return response()->json([
+                'result' => config('constants.CANT_UPDATE_HOME'),
+            ], 500);
         }
-        return json_encode($response);
+
+        // switch($result) {
+        //     case 0:
+        //         $errcode = config('constants.CANT_UPDATE_HOME');
+        //         $response = [
+        //             'errcode' => $errcode,
+        //         ];
+        //         break;
+        //     case 1:
+        //         $response = [
+        //             'users' => User::where('manage_id',$manage_id)->first(),
+        //             'wallets' => UserWallet::where('manage_id', $manage_id)->first(),
+        //             // TODO: 他にホームに戻った時に取得したい情報があればここに追記
+        //         ];
+        //         break;
+        // }
+
+        return response()->json([
+            'users' => User::where('manage_id',$manage_id)->first(),
+            'wallets' => UserWallet::where('manage_id', $manage_id)->first(),
+            'result' => $result,
+        ]);
     }
 }

@@ -43,22 +43,35 @@ class LoginController extends Controller
             $result = 1;
         });
 
-        switch($result) {
-            case 0:
-                $errcode = config('constants.CANT_LOGIN');
-                $response = [
-                    'errcode' => $errcode,
-                ];
-                break;
-            case 1:
-                $response = [
-                    'users' => User::where('manage_id', $manage_id)->first(),
-                    //'wallets' => UserWallet::where('manage_id', $manage_id)->first(),
-                ];
-                break;
+        // switch($result) {
+        //     case 0:
+        //         $errcode = config('constants.CANT_LOGIN');
+        //         $response = [
+        //             'errcode' => $errcode,
+        //         ];
+        //         break;
+        //     case 1:
+        //         $response = [
+        //             'users' => User::where('manage_id', $manage_id)->first(),
+        //             'wallets' => UserWallet::where('manage_id', $manage_id)->first(),
+        //         ];
+        //         break;
+        // }
+
+        // // ログイン成功時のレスポンス
+        // return json_encode($response);
+
+
+        if ($result === 0) {
+            return response()->json([
+                'result' => config('constants.CANT_UPDATE_HOME'),
+            ], 500);
         }
 
-        // ログイン成功時のレスポンス
-        return json_encode($response);
+        return response()->json([
+            'users' => User::where('manage_id',$manage_id)->first(),
+            'wallets' => UserWallet::where('manage_id', $manage_id)->first(),
+            'result' => $result,
+        ]);
     }
 }

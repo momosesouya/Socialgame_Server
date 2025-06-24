@@ -15,7 +15,7 @@ class UserWallet extends Model
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
 
-    protected $guarded = {
+    protected $guarded = [
         'created',
-    };
+    ];
 }
