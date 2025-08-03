@@ -4,6 +4,18 @@ namespace App\Libs;
 
 // ショップ
 use App\Models\PaymentShop;
+// 武器
+use App\Models\Weapon;
+use App\Models\WeaponCategory;
+use App\Models\WeaponExp;
+use App\Models\WeaponRarity;
+// ガチャ
+use App\Models\GachaWeapon;
+use App\Models\GachaPeriod;
+// アイテム
+use App\Models\Item;
+use App\Models\ItemCategory;
+
 
 class MasterDataService 
 {
@@ -16,7 +28,14 @@ class MasterDataService
         // master_dataを追加
         $master_data_list = [];
         $master_data_list['payment_shop'] = PaymentShop::all();
-        // ↑ここに追加したいマスタデータを追記していく
+        $master_data_list['weapon_master'] = Weapon::all();
+        $master_data_list['weapon_category'] = WeaponCategory::all();
+        $master_data_list['weapon_exp'] = WeaponExp::all();
+        $master_data_list['weapon_rarity'] = WeaponRarity::all();
+        $master_data_list['gacha_weapon'] = GachaWeapon::all();
+        $master_data_list['gacha_period'] = GachaPeriod::all();
+        $master_data_list['item_master'] = Item::all();
+        $master_data_list['item_category'] = ItemCategory::all();
 
         // JSONファイルを作成
         $json = json_encode($master_data_list);

@@ -7,7 +7,7 @@ use App\Models\PaymentShop;
 use Illuminate\Support\Facades\DB;
 
 
-class AddMasterDataCommand extends Command
+class AddPaymentShopMaster extends Command
 {
     // このコマンドでマスタデータ追加
     protected $signature = 'add:PaymentShopMaster';
@@ -22,7 +22,7 @@ class AddMasterDataCommand extends Command
                 'price' => 120,
                 'paid_currency' => 60,
                 'bonus_currency' => 0,
-            ],  
+            ],
             [
                 'product_id' => 5002,
                 'product_name' => "通貨300個",
