@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use App\Models\UserWallet;
@@ -23,7 +21,7 @@ class GachaExecuteController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $gacha_id = $request->input('gacha_id');
+        $gachaId = $request->input('gacha_id');
 
         $now = Carbon::now();
         
@@ -32,14 +30,13 @@ class GachaExecuteController extends Controller
             ->first();
 
         if (!$period) {
-            return response()->json(['errcode' => 'GACHA_NOT_AVAILABLE'], 400);
+            return response()->json(['errcode' => 'constants.NOT_GACHA_PERIOD'], 'constants.ERRCODE_NOT_GACHA_PERIOD');
         }
 
-
-        $gachaService = new GachaService($gacha_id);
+        $gachaService = new GachaService($gachaId);
 
         if (!$gachaService) {
-            return response()->json(['errcode' => 'INVALID_GACHA_TYPE'], 400);
+            return response()->json(['errcode' => 'constants.NOT_GACHA_FOUND'], 'constants.ERRCODE_NOT_GACHA_FOUND');
         }
 
         $result = $gachaService->execute($request);

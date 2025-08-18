@@ -21,13 +21,13 @@ class GetGachaLogController extends Controller
         $userData = User::where('user_id', $request->uid)->first();
 
         if (!$userData) {
-            return response()->json(['error' => 'ユーザーが見つかりません'], 404);
+            return response()->json(['error' => 'constants.LOGIN_NOT_USER_FOUND'], 'ERRCODE_USER_NOT_FOUND');
         }
 
-        $manage_id = $userData->manage_id;
+        $manageId = $userData->manage_id;
 
         // ガチャログ取得
-        $gachaLogs = GachaLog::where('manage_id', $manage_id)->get();
+        $gachaLogs = GachaLog::where('manage_id', $manageId)->get();
 
         return response()->json(['gacha_log' => $gachaLogs]);
     }

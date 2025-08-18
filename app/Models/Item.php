@@ -24,7 +24,7 @@ class Item extends Model
     // マスタデータ取得
     public static function GetItem()
     {
-        $item_data_list = MasterDataService::GetMasterData('item_master');
-        return $item_data_list;
+        $itemDataList = MasterDataService::GetMasterData('item_master');
+        return $itemDataList;
     }
 }

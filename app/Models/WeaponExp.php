@@ -23,7 +23,7 @@ class WeaponExp extends Model
     // マスタデータ取得
     public static function GetWeaponExp()
     {
-        $master_data_list = MasterDataService::GetMasterData('weapon_exp');
-        return $master_data_list;
+        $masterDataList = MasterDataService::GetMasterData('weapon_exp');
+        return $masterDataList;
     }
 }

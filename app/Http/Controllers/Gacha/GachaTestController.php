@@ -60,13 +60,13 @@ class GachaTestController extends Controller
                 'gCount' => $gacha_count,
             ]));
 
-            // 出た weapon_id 一覧（出現順）
+            // 出た weapon_id 一覧 排出順
             $weaponIds = explode('/', $result['gacha_result']);
 
             // rarity_id = 30000 の武器ID一覧を事前に取得
             $targetWeaponIds = Weapon::where('rarity_id', 30000)->pluck('weapon_id')->toArray();
 
-            // 何回目に出たか（1-based index）
+            // 何回目に出たか
             $appearances = [];
             foreach ($weaponIds as $i => $wid) {
                 if (in_array((int)$wid, $targetWeaponIds)) {
@@ -78,7 +78,7 @@ class GachaTestController extends Controller
             return response()->json([
                 'gacha_result_summary' => $result,
                 'target_rarity' => 30000,
-                'appearances' => $appearances, // [5, 123, 4334] ← この形式で返す
+                'appearances' => $appearances, // [5, 123, 4334] この形式で返す
             ]);
         } catch (\Exception $e) {
             return response()->json([

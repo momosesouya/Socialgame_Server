@@ -26,19 +26,19 @@ class MasterDataService
         chmod(__DIR__ . '/' . $version, 0666);
 
         // master_dataを追加
-        $master_data_list = [];
-        $master_data_list['payment_shop'] = PaymentShop::all();
-        $master_data_list['weapon_master'] = Weapon::all();
-        $master_data_list['weapon_category'] = WeaponCategory::all();
-        $master_data_list['weapon_exp'] = WeaponExp::all();
-        $master_data_list['weapon_rarity'] = WeaponRarity::all();
-        $master_data_list['gacha_weapon'] = GachaWeapon::all();
-        $master_data_list['gacha_period'] = GachaPeriod::all();
-        $master_data_list['item_master'] = Item::all();
-        $master_data_list['item_category'] = ItemCategory::all();
+        $masterDataList = [];
+        $masterDataList['payment_shop'] = PaymentShop::all();
+        $masterDataList['weapon_master'] = Weapon::all();
+        $masterDataList['weapon_category'] = WeaponCategory::all();
+        $masterDataList['weapon_exp'] = WeaponExp::all();
+        $masterDataList['weapon_rarity'] = WeaponRarity::all();
+        $masterDataList['gacha_weapon'] = GachaWeapon::all();
+        $masterDataList['gacha_period'] = GachaPeriod::all();
+        $masterDataList['item_master'] = Item::all();
+        $masterDataList['item_category'] = ItemCategory::all();
 
         // JSONファイルを作成
-        $json = json_encode($master_data_list);
+        $json = json_encode($masterDataList);
         file_put_contents(__DIR__ . '/' . $version,$json);
     }
 
@@ -47,7 +47,7 @@ class MasterDataService
      * 
      * @param data_name 取得データ名
      */
-    public static function GetMasterData($data_name)
+    public static function GetMasterData($dataName)
     {
         // ファイル取得
         $file = fopen(__DIR__ . '/' . config('constants.MASTER_DATA_VERSION'), "r");
@@ -60,11 +60,11 @@ class MasterDataService
         while ($line = fgets($file)){
             $json = json_decode($line, true);
         }
-        if(!array_key_exists($data_name, $json)) {
+        if(!array_key_exists($dataName, $json)) {
             return false;
         }
 
-        return $json[$data_name];
+        return $json[$dataName];
     }
 
     /**
@@ -72,8 +72,8 @@ class MasterDataService
      * 
      * @param client_master_version マスタバージョン(クライアント)
      */
-    public static function CheckMasterDataVersion($client_master_version)
+    public static function CheckMasterDataVersion($clientMasterVersion)
     {
-        return config('constants.MASTER_DATA_VERSION') <= $client_master_version;
+        return config('constants.MASTER_DATA_VERSION') <= $clientMasterVersion;
     }
 }

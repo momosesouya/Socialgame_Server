@@ -17,24 +17,18 @@ class RegistrationController extends Controller
 {
     public function __invoke(Request $request)
     {
-        //デバッグ
-        // \Log::debug('Register Request: ', $request->all());
-        // dd($request->all());
         $result = 0;
         $response = 0;
 
-        // ユーザー管理ID
-        $manage_id = 0;
-
         // ユーザーデータ
-        $user_Data = 0;
+        $userData = 0;
         // ウォレットデータ
         $walletsData = [];
         // アイテムデータ
         $itemsData = [];
 
         // ユーザーIDの決定
-        $user_id = Str::ulid();
+        $userId = Str::ulid();
 
         //ユーザー名0文字以下、13文字以上かつ指定文字以外を使用していたらエラー
         $validator = Validator::make($request->all(), [
@@ -47,55 +41,41 @@ class RegistrationController extends Controller
             ], 422);
         }
         $data = $validator->validated();
-        $user_name = $data['un'];
+        $userName = $data['un'];
 
         // 引数を取得できない場合、登録ができない
         $response = [];
-        DB::transaction(function () use (&$result, $user_id, $user_name, $manage_id, &$user_Data, &$walletsData, &$itemsData){
+        DB::transaction(function () use (&$result, $userId, $userName, &$userData, &$walletsData, &$itemsData){
     
             // ユーザー情報登録
-            $user_Data = User::create([
-                'user_id' => $user_id,
-                'user_name' => $user_name,
+            $userData = User::create([
+                'user_id' => $userId,
+                'user_name' => $userName,
                 'max_stamina' => config('constants.MAX_STAMINA'),
                 'last_stamina' => config('constants.LAST_STAMINA'),
                 'stamina_updated' => Carbon::now()->format('Y-m-d H:i:s'),
                 'last_login' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
-            $manage_id = $user_Data->manage_id;
+            $manageId = $userData->manage_id;
     
             // ウォレット情報登録
             $walletsData = UserWallet::create([
-                'manage_id' => $manage_id,
+                'manage_id' => $manageId,
                 'free_amount' => config('constants.FREE_AMOUNT'),
                 'paid_amount' => config('constants.PAID_AMOUNT'),
                 'max_amount' => config('constants.MAX_AMOUNT'),
             ]);
             
             // アイテム情報登録
-            // $item_data_list = Item::all();
-            // foreach ($item_data_list as $item_data) {
-            //     $newItem = ItemInstance::updateOrCreate(
-            //         ['manage_id' => $manage_id, 'item_id' => $item_data['item_id']],
-            //         [
-            //             'has_enhancement_item' => 0,
-            //             'has_stamina_item' => 0,
-            //             'has_exchange_item' => 0,
-            //         ]
-            //     );
-            //     $itemsData[] = $newItem;
-            // }
-
-            $item_data_list = Item::all();
-            foreach ($item_data_list as $item_data) {
-                $existingItem = ItemInstance::where('manage_id', $manage_id)
-                                ->where('item_id', $item_data['item_id'])
+            $itemDataList = Item::all();
+            foreach ($itemDataList as $itemData) {
+                $existingItem = ItemInstance::where('manage_id', $manageId)
+                                ->where('item_id', $itemData['item_id'])
                                 ->first();
-
                 if (!$existingItem) {
                     $newItem = ItemInstance::create([
-                        'manage_id' => $manage_id,
-                        'item_id' => $item_data['item_id'],
+                        'manage_id' => $manageId,
+                        'item_id' => $itemData['item_id'],
                         'has_enhancement_item' => 0,
                         'has_stamina_item' => 0,
                         'has_exchange_item' => 0,
@@ -106,7 +86,7 @@ class RegistrationController extends Controller
                 $itemsData[] = $newItem;
             }
 
-            $walletsData = UserWallet::where('manage_id', $manage_id)->first();
+            $walletsData = UserWallet::where('manage_id', $manageId)->first();
             $result = 1;
         });
 
@@ -116,12 +96,12 @@ class RegistrationController extends Controller
                 'message' => config('constants.CANT_REGISTRATION'),
             ], 500);
         }
+
         return response()->json([
-        'users' => $user_Data,
-        'wallets' => $walletsData,
-        // 'items' => ItemInstance::where('manage_id', $manage_id)->get(),
-        'items' => $itemsData,
-        'result' => $result,
+            'users' => $userData,
+            'wallets' => $walletsData,
+            'items' => $itemsData,
+            'result' => $result,
         ]);
     }
 }

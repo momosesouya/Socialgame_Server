@@ -23,7 +23,7 @@ class WeaponRarity extends Model
     // マスタデータ取得
     public static function GetWeaponRarity()
     {
-        $master_data_list = MasterDataService::GetMasterData('weapon_rarity');
-        return $master_data_list;
+        $masterDataList = MasterDataService::GetMasterData('weapon_rarity');
+        return $masterDataList;
     }
 }

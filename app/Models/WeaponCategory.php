@@ -23,7 +23,7 @@ class WeaponCategory extends Model
     // マスタデータ取得
     public static function GetWeaponCategory()
     {
-        $master_data_list = MasterDataService::GetMasterData('weapon_category');
-        return $master_data_list;
+        $masterDataList = MasterDataService::GetMasterData('weapon_category');
+        return $masterDataList;
     }
 }
