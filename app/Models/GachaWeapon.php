@@ -22,7 +22,7 @@ class GachaWeapon extends Model
 
     public static function GetGachaWeapon()
     {
-        $master_data_list = MasterDataService::GetMasterData('gacha_weapon');
-        return $master_data_list;
+        $masterDataList = MasterDataService::GetMasterData('gacha_weapon');
+        return $masterDataList;
     }
 }

@@ -23,7 +23,7 @@ class GachaPeriod extends Model
     // マスタデータ取得
     public static function GetWeaponPeriodMaster() 
     {
-        $master_data_list = MasterDataService::GetMasterData('gacha_period');
-        return $master_data_list;
+        $masterDataList = MasterDataService::GetMasterData('gacha_period');
+        return $masterDataList;
     }
 }

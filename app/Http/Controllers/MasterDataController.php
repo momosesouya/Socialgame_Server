@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Log;
-
 // ショップ
 use App\Models\PaymentShop;
 // 武器
@@ -22,30 +20,28 @@ class MasterDataController extends Controller
     public function __invoke()
     {
         // クライアント側に送信したいマスタデータだけ選択
-        $payment_shop = PaymentShop::GetPaymentShop();
-        $weapon_master = Weapon::GetWeaponMaster();
-        $weapon_category = WeaponCategory::GetWeaponCategory();
-        $weapon_rarity = WeaponRarity::GetWeaponRarity();
-        $weapon_exp = WeaponExp::GetWeaponExp();
-        $gacha_weapon = GachaWeapon::GetGachaWeapon();
-        $gacha_period = GachaPeriod::GetWeaponPeriodMaster();
-        $item_master = Item::GetItem();
-        $item_category = ItemCategory::GetItemCategory();
-        \Log::debug('取得した payment_shop:', ['data' => $payment_shop]);
+        $paymentShop = PaymentShop::GetPaymentShop();
+        $weaponMaster = Weapon::GetWeaponMaster();
+        $weaponCategory = WeaponCategory::GetWeaponCategory();
+        $weaponRarity = WeaponRarity::GetWeaponRarity();
+        $weaponExp = WeaponExp::GetWeaponExp();
+        $gachaWeapon = GachaWeapon::GetGachaWeapon();
+        $gachaPeriod = GachaPeriod::GetWeaponPeriodMaster();
+        $itemMaster = Item::GetItem();
+        $itemCategory = ItemCategory::GetItemCategory();
 
-        $responce = [
+        $response = [
             'master_data_version' => config('constants.MASTER_DATA_VERSION'),
-            'payment_shop' => $payment_shop,
-            'weapon_master' => $weapon_master,
-            'weapon_category' => $weapon_category,
-            'weapon_rarity' => $weapon_rarity,
-            'weapon_exp' => $weapon_exp,
-            'gacha_weapon' => $gacha_weapon,
-            'gacha_period' => $gacha_period,
-            'item_master' => $item_master,
-            'item_category' => $item_category,
+            'payment_shop' => $paymentShop,
+            'weapon_master' => $weaponMaster,
+            'weapon_category' => $weaponCategory,
+            'weapon_rarity' => $weaponRarity,
+            'weapon_exp' => $weaponExp,
+            'gacha_weapon' => $gachaWeapon,
+            'gacha_period' => $gachaPeriod,
+            'item_master' => $itemMaster,
+            'item_category' => $itemCategory,
         ];
-        return response()->json($responce);
-        // 現状すべてのデータを取得しているので指定されたものだけ取得できるようにしたい
+        return response()->json($response);
     }
 }

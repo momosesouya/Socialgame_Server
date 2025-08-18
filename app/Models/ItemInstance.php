@@ -19,6 +19,8 @@ class ItemInstance extends Model
     const UPDATED_AT = 'modified';
 
     protected $fillable = [
+        'manage_id',
+        'item_id',
         'has_enhancement_item',
         'has_stamina_item',
         'has_exchange_item',

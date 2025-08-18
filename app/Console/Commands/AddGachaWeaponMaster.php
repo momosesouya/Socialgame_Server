@@ -28,6 +28,27 @@ class AddGachaWeaponMaster extends Command
                 'weapon_id' => 1000002,
                 'weight' => 150000,
             ],
+            [
+                'gacha_id' => 100,
+                'weapon_id' => 1000003,
+                'weight' => 150000,
+            ],
+            [
+                'gacha_id' => 100,
+                'weapon_id' => 1000004,
+                'weight' => 150000,
+            ],
+            [
+                'gacha_id' => 100,
+                'weapon_id' => 1000005,
+                'weight' => 150000,
+            ],
+            // RARE
+            [
+                'gacha_id' => 100,
+                'weapon_id' => 1000002,
+                'weight' => 150000,
+            ],
         ];
 
         DB::transaction(function () use ($addGachaWeaponData) {

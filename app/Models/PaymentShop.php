@@ -25,7 +25,7 @@ class PaymentShop extends Model
     // マスタデータ取得
     public static function GetPaymentShop()
     {
-        $payment_shop_data_list = MasterDataService::GetMasterData('payment_shop');
-        return $payment_shop_data_list;
+        $paymentShopDataList = MasterDataService::GetMasterData('payment_shop');
+        return $paymentShopDataList;
     }
 }

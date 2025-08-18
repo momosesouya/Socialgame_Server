@@ -19,9 +19,6 @@ Route::post('/home', App\Http\Controllers\HomeController::class);
 // 通貨購入
 Route::post('/buyCurrency', App\Http\Controllers\BuyCurrencyController::class);
 
-// スタミナ回復
-Route::post('/staminaRecovery', App\Http\Controllers\StaminaRecoveryController::class);
-
 // スタミナ消費
 Route::post('/staminaConsumption', App\Http\Controllers\StaminaConsumptionController::class);
 
@@ -40,10 +37,6 @@ Route::post('/masterCheck', App\Http\Controllers\MasterDataCheckController::clas
 
 // マスタデータ取得
 Route::post('/masterGet', App\Http\Controllers\MasterDataController::class);
-
-//マスターデータ挿入
-Route::get('/addMasterData', App\Http\Controllers\AddMasterDataController::class);
-
 
 // ガチャテスト用
 Route::get('/gachaTest', App\Http\Controllers\Gacha\GachaTestController::class);

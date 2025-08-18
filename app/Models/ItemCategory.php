@@ -24,7 +24,7 @@ class ItemCategory extends Model
     // マスタデータ取得
     public static function GetItemCategory()
     {
-        $master_data_list = MasterDataService::GetMasterData('item_category');
-        return $master_data_list;
+        $masterDataList = MasterDataService::GetMasterData('item_category');
+        return $masterDataList;
     }
 }

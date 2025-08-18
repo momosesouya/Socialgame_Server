@@ -16,39 +16,39 @@ class LevelUpController extends Controller
     public function __invoke(Request $request)
     {
         $userData = User::where('user_id', $request->input('uid'))->first();
-        $manage_id = $userData->manage_id;
-        $weapon_id = $request->input('wid');
-        $item_id = 1002; // 武器強化アイテムID
-        $use_count = (int)$request->input('count');
+        $manageId = $userData->manage_id;
+        $weaponId = $request->input('wid');
+        $itemId = config('constants.WEAPON_ENHANCE_ITEM'); // 武器強化アイテムID
+        $useCount = (int)$request->input('count');
         try {
-            $result = DB::transaction(function () use ($manage_id, $weapon_id, $item_id, $use_count) {
+            $result = DB::transaction(function () use ($manageId, $weaponId, $itemId, $useCount) {
                 // アイテム所持数確認
-                $itemInstance = ItemInstance::where('manage_id', $manage_id)->where('item_id', $item_id)->first();
-                if (!$itemInstance || $itemInstance->has_enhancement_item < $use_count) {
+                $itemInstance = ItemInstance::where('manage_id', $manageId)->where('item_id', $itemId)->first();
+                if (!$itemInstance || $itemInstance->has_enhancement_item < $useCount) {
                     throw new \Exception('アイテム不足');
                 }
 
                 // 武器インスタンス取得
-                $weapon = WeaponInstance::where('manage_id', $manage_id)->where('weapon_id', $weapon_id)->first();
+                $weapon = WeaponInstance::where('manage_id', $manageId)->where('weapon_id', $weaponId)->first();
                 if (!$weapon) {
                     throw new \Exception('武器が存在しません');
                 }
                 
                 // 武器更新
-                WeaponInstance::where('manage_id', $manage_id)
-                              ->where('weapon_id', $weapon_id)
+                WeaponInstance::where('manage_id', $manageId)
+                              ->where('weapon_id', $weaponId)
                               ->update(['level' => $weapon->level + 1]);
 
-                $current_level = $weapon->level;
-                $after_item = $itemInstance->has_enhancement_item - $use_count;
+                $currentLevel = $weapon->level;
+                $afterItem = $itemInstance->has_enhancement_item - $useCount;
 
                 // アイテム数更新
-                ItemInstance::where('manage_id', $manage_id)
-                            ->where('item_id', $item_id)
-                            ->update(['has_enhancement_item' => $after_item]);
+                ItemInstance::where('manage_id', $manageId)
+                            ->where('item_id', $itemId)
+                            ->update(['has_enhancement_item' => $afterItem]);
                 return [
-                    'new_level' => $current_level,
-                    'enhancement_item' => $after_item,
+                    'new_level' => $currentLevel,
+                    'enhancement_item' => $afterItem,
                 ];
             });
 
