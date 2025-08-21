@@ -53,7 +53,7 @@ return [
 
     /*エラーメッセージ*/
     
-    // Auth関連
+    // ログイン
     'LOGIN_USER_NOT_FOUND' => 'ログインしているユーザーは見つかりませんでした',
     'USER_IS_NOT_LOGGED_IN' => 'ユーザーはログインしていません',
     'LOST_CONNECT' => '接続が切れました',
@@ -76,4 +76,8 @@ return [
     // ガチャ
     'NOT_GACHA_PERIOD' => 'ガチャが期間内ではありません',
     'NOT_GACHA_FOUND' => 'ガチャが見つかりません',
+
+    // マスタデータ
+    'MASTER_DATA_UPDATE' => 'マスターデータ更新が必要です',
+    'LATEST_MASTER_DATA' => '最新のバージョンです',
 ];
