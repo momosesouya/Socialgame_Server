@@ -70,10 +70,16 @@ class MasterDataService
     /**
      * マスタバージョンチェック処理
      * 
-     * @param client_master_version マスタバージョン(クライアント)
+     * @param client_master_version クライアントのマスタバージョン
      */
     public static function CheckMasterDataVersion($clientMasterVersion)
     {
-        return config('constants.MASTER_DATA_VERSION') <= $clientMasterVersion;
+        $serverVersion = config('constants.MASTER_DATA_VERSION');
+
+        // クライアントの方が古いとき
+        if ($clientMasterVersion < $serverVersion) {
+            return false;
+        }
+        return true;
     }
 }

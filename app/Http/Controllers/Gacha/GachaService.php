@@ -71,7 +71,7 @@ class GachaService
                 if ($rand <= 0) {
                     $weaponId = $entry['weapon_id'];
 
-                    // ガチャ履歴は新旧関係なく必ず保存
+                    // ガチャ履歴の保存
                     GachaLog::create([
                         'manage_id' => $manageId,
                         'gacha_id' => $this->gachaId,
@@ -95,7 +95,7 @@ class GachaService
                         $newWeapons[] = $weaponId;
                     }
 
-                    // draw結果として追加（新規・重複問わず）
+                    // draw結果として追加
                     $draws[] = ['weapon_id' => $weaponId];
                     break;
                 }
@@ -103,7 +103,7 @@ class GachaService
         }
 
         return [
-            'draws' => $draws,             // 全ての抽選結果（新旧問わず）
+            'draws' => $draws,             // 全ての抽選結果
             'new_weapons' => $newWeapons, // 新規に獲得した武器IDのみ
         ];
     }
